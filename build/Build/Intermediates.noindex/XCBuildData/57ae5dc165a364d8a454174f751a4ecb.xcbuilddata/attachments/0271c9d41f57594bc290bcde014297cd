@@ -1,0 +1,42 @@
+/Users/lukefornieri/CoreTrack/Utils/Extensions.swift
+/Users/lukefornieri/CoreTrack/Utils/UIConstants.swift
+/Users/lukefornieri/CoreTrack/Managers/ChatManager.swift
+/Users/lukefornieri/CoreTrack/Models/SmartInputBar.swift
+/Users/lukefornieri/CoreTrack/ServiceManager.swift
+/Users/lukefornieri/CoreTrack/Services/WeatherManager.swift
+/Users/lukefornieri/CoreTrack/Services/Protocols/NutritionAnalyzer.swift
+/Users/lukefornieri/CoreTrack/Services/ChatService.swift
+/Users/lukefornieri/CoreTrack/Services/NutritionService.swift
+/Users/lukefornieri/CoreTrack/Views/Core\ Views/CoachTabContentView.swift
+/Users/lukefornieri/CoreTrack/Services/AIService.swift
+/Users/lukefornieri/CoreTrack/Services/PDFAnalysisService.swift
+/Users/lukefornieri/CoreTrack/Services/FoodAnalysisService.swift
+/Users/lukefornieri/CoreTrack/Services/SpeechManager.swift
+/Users/lukefornieri/CoreTrack/Services/ImageAnalysisService.swift
+/Users/lukefornieri/CoreTrack/Models/FoodEntry.swift
+/Users/lukefornieri/CoreTrack/Views/Core\ Views/CalorieProgressCardView.swift
+/Users/lukefornieri/CoreTrack/Views/Settings/AppPreferencesView.swift
+/Users/lukefornieri/CoreTrack/Views/Settings/DataManagementView.swift
+/Users/lukefornieri/CoreTrack/Views/Core\ Views/AnalyticsView.swift
+/Users/lukefornieri/CoreTrack/CoreTrackApp.swift
+/Users/lukefornieri/CoreTrack/Views/Core\ Views/AICoachView.swift
+/Users/lukefornieri/CoreTrack/Views/Core\ Views/PaywallView.swift
+/Users/lukefornieri/CoreTrack/Views/Core\ Views/ModernAddFoodView.swift
+/Users/lukefornieri/CoreTrack/Views/Settings/AccountSettingsView.swift
+/Users/lukefornieri/CoreTrack/Views/Core\ Views/SmartGroceryView.swift
+/Users/lukefornieri/CoreTrack/Views/Settings/NotificationSettingsView.swift
+/Users/lukefornieri/CoreTrack/Views/Components/ChatBubbleView.swift
+/Users/lukefornieri/CoreTrack/Views/Settings/NutritionSettingsView.swift
+/Users/lukefornieri/CoreTrack/Views/Core\ Views/VoiceMealPlannerView.swift
+/Users/lukefornieri/CoreTrack/Views/Components/TypingIndicator.swift
+/Users/lukefornieri/CoreTrack/Views/Components/ImagePicker.swift
+/Users/lukefornieri/CoreTrack/Views/Core\ Views/MainView.swift
+/Users/lukefornieri/CoreTrack/Views/Core\ Views/SettingsView.swift
+/Users/lukefornieri/CoreTrack/Views/Components/GlassCard.swift
+/Users/lukefornieri/CoreTrack/Models/ChatType.swift
+/Users/lukefornieri/CoreTrack/Models/UniversalNavbar.swift
+/Users/lukefornieri/CoreTrack/Models/NutritionData.swift
+/Users/lukefornieri/CoreTrack/Managers/NotificationManager.swift
+/Users/lukefornieri/CoreTrack/Managers/UserManager.swift
+/Users/lukefornieri/CoreTrack/Data/FoodDataManager.swift
+/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/DerivedSources/GeneratedAssetSymbols.swift

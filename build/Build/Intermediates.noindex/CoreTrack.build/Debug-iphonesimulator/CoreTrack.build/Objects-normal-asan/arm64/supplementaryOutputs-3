@@ -1,0 +1,37 @@
+{
+  "/Users/lukefornieri/CoreTrack/Models/FoodEntry.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/FoodEntry.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/FoodEntry.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/FoodEntry.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/FoodEntry.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/FoodEntry.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Services/FoodAnalysisService.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/FoodAnalysisService.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/FoodAnalysisService.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/FoodAnalysisService.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/FoodAnalysisService.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/FoodAnalysisService.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Services/ImageAnalysisService.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/ImageAnalysisService.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/ImageAnalysisService.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/ImageAnalysisService.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/ImageAnalysisService.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/ImageAnalysisService.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Services/SpeechManager.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/SpeechManager.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/SpeechManager.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/SpeechManager.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/SpeechManager.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/SpeechManager.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Views/Core Views/CalorieProgressCardView.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/CalorieProgressCardView.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/CalorieProgressCardView.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/CalorieProgressCardView.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/CalorieProgressCardView.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/arm64/CalorieProgressCardView.swiftdeps"
+  }
+}

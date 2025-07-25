@@ -1,0 +1,37 @@
+{
+  "/Users/lukefornieri/CoreTrack/Views/Components/ChatBubbleView.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/ChatBubbleView.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/ChatBubbleView.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/ChatBubbleView.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/ChatBubbleView.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/ChatBubbleView.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Views/Components/ImagePicker.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/ImagePicker.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/ImagePicker.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/ImagePicker.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/ImagePicker.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/ImagePicker.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Views/Components/TypingIndicator.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/TypingIndicator.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/TypingIndicator.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/TypingIndicator.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/TypingIndicator.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/TypingIndicator.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Views/Core Views/VoiceMealPlannerView.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/VoiceMealPlannerView.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/VoiceMealPlannerView.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/VoiceMealPlannerView.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/VoiceMealPlannerView.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/VoiceMealPlannerView.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Views/Settings/NutritionSettingsView.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/NutritionSettingsView.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/NutritionSettingsView.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/NutritionSettingsView.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/NutritionSettingsView.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal/arm64/NutritionSettingsView.swiftdeps"
+  }
+}

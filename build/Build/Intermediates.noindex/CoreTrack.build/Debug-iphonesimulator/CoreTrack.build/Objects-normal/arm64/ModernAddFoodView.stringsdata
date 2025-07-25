@@ -1,0 +1,32 @@
+{
+  "source": "/Users/lukefornieri/CoreTrack/Views/Core Views/ModernAddFoodView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Add Food",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Track your meals with AI",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "What did you eat?",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 41
+        }
+      }
+    ]
+  },
+  "version": 1
+}

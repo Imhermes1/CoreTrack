@@ -1,0 +1,56 @@
+{
+  "source": "/Users/lukefornieri/CoreTrack/Views/Core Views/SmartGroceryView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Smart Grocery List",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Coming Soon",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "AI-powered grocery shopping with direct food ordering",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "Order food directly from the app and automatically track nutrition data",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "Food Ordering Feature",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "This feature is currently in development",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 117
+        }
+      }
+    ]
+  },
+  "version": 1
+}

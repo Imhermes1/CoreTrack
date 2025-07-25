@@ -1,0 +1,16 @@
+{
+  "source": "/Users/lukefornieri/CoreTrack/Models/UniversalNavbar.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Main Content Area",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 365
+        }
+      }
+    ]
+  },
+  "version": 1
+}

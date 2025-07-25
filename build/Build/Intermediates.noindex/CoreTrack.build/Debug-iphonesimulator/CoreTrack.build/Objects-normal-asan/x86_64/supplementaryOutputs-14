@@ -1,0 +1,37 @@
+{
+  "/Users/lukefornieri/CoreTrack/Models/ChatType.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/ChatType.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/ChatType.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/ChatType.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/ChatType.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/ChatType.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Models/UniversalNavbar.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/UniversalNavbar.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/UniversalNavbar.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/UniversalNavbar.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/UniversalNavbar.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/UniversalNavbar.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Views/Components/GlassCard.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/GlassCard.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/GlassCard.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/GlassCard.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/GlassCard.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/GlassCard.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Views/Core Views/MainView.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/MainView.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/MainView.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/MainView.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/MainView.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/MainView.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Views/Core Views/SettingsView.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/SettingsView.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/SettingsView.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/SettingsView.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/SettingsView.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/SettingsView.swiftdeps"
+  }
+}

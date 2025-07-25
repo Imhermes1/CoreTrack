@@ -1,0 +1,64 @@
+{
+  "source": "/Users/lukefornieri/CoreTrack/Views/Core Views/PaywallView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Unlock Core Track",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Experience the full power of intelligent nutrition tracking and AI-powered coaching",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "All subscriptions include a 7-day free trial",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 89
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel anytime from Settings",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 93
+        }
+      },
+      {
+        "comment": "",
+        "key": "Recommended",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 132
+        }
+      },
+      {
+        "comment": "",
+        "key": "Choose %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 179
+        }
+      },
+      {
+        "comment": "",
+        "key": "Current Plan",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 198
+        }
+      }
+    ]
+  },
+  "version": 1
+}

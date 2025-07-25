@@ -1,0 +1,24 @@
+{
+  "source": "/Users/lukefornieri/CoreTrack/Views/Core Views/SettingsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Settings",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Customise your experience",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 73
+        }
+      }
+    ]
+  },
+  "version": 1
+}

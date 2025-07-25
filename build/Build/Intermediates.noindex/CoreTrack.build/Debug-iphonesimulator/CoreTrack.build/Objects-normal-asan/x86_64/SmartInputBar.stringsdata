@@ -1,0 +1,32 @@
+{
+  "source": "/Users/lukefornieri/CoreTrack/Models/SmartInputBar.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Camera",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 128
+        }
+      },
+      {
+        "comment": "",
+        "key": "Recording",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 146
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voice",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 146
+        }
+      }
+    ]
+  },
+  "version": 1
+}

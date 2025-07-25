@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>11</integer>
+	<key>logs</key>
+	<dict>
+		<key>45D1031D-5353-4FA1-9011-695A96647490</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>45D1031D-5353-4FA1-9011-695A96647490.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>1</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>CoreTrack project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>CoreTrack</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project CoreTrack with scheme CoreTrack and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>775133150.72502601</real>
+			<key>timeStoppedRecording</key>
+			<real>775133166.414886</real>
+			<key>title</key>
+			<string>Building project CoreTrack with scheme CoreTrack and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>45D1031D-5353-4FA1-9011-695A96647490</string>
+		</dict>
+		<key>60F980B2-DA11-4111-B10B-4A2AFB296AB3</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>60F980B2-DA11-4111-B10B-4A2AFB296AB3.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>1</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>CoreTrack project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>CoreTrack</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project CoreTrack with scheme CoreTrack and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>775133354.87054801</real>
+			<key>timeStoppedRecording</key>
+			<real>775133381.86774397</real>
+			<key>title</key>
+			<string>Building project CoreTrack with scheme CoreTrack and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>60F980B2-DA11-4111-B10B-4A2AFB296AB3</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

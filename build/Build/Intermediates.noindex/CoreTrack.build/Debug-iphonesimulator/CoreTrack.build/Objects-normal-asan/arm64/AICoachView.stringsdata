@@ -1,0 +1,16 @@
+{
+  "source": "/Users/lukefornieri/CoreTrack/Views/Core Views/AICoachView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Ask your coach anything...",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 74
+        }
+      }
+    ]
+  },
+  "version": 1
+}

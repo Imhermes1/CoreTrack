@@ -1,0 +1,16 @@
+{
+  "source": "/Users/lukefornieri/CoreTrack/Views/Components/ImagePicker.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "ImagePicker",
+        "location": {
+          "startingColumn": 1,
+          "startingLine": 55
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,37 @@
+{
+  "/Users/lukefornieri/CoreTrack/Services/AIService.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/AIService.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/AIService.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/AIService.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/AIService.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/AIService.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Services/ChatService.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/ChatService.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/ChatService.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/ChatService.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/ChatService.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/ChatService.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Services/NutritionService.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/NutritionService.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/NutritionService.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/NutritionService.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/NutritionService.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/NutritionService.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Services/PDFAnalysisService.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/PDFAnalysisService.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/PDFAnalysisService.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/PDFAnalysisService.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/PDFAnalysisService.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/PDFAnalysisService.swiftdeps"
+  },
+  "/Users/lukefornieri/CoreTrack/Services/Protocols/NutritionAnalyzer.swift" : {
+    "const-values" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/NutritionAnalyzer.swiftconstvalues",
+    "dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/NutritionAnalyzer.d",
+    "diagnostics" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/NutritionAnalyzer.dia",
+    "object" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/NutritionAnalyzer.o",
+    "swift-dependencies" : "/Users/lukefornieri/CoreTrack/build/Build/Intermediates.noindex/CoreTrack.build/Debug-iphonesimulator/CoreTrack.build/Objects-normal-asan/x86_64/NutritionAnalyzer.swiftdeps"
+  }
+}

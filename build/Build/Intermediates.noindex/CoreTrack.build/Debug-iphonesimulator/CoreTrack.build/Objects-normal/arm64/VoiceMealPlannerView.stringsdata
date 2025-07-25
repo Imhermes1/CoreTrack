@@ -1,0 +1,64 @@
+{
+  "source": "/Users/lukefornieri/CoreTrack/Views/Core Views/VoiceMealPlannerView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "AI Meal Planner",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Let AI create personalised meal plans based on your goals",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "Timeframe",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "Timeframe",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "Creating Your Plan...",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Generate Meal Plan",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Your Personalised Meal Plan",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 160
+        }
+      }
+    ]
+  },
+  "version": 1
+}

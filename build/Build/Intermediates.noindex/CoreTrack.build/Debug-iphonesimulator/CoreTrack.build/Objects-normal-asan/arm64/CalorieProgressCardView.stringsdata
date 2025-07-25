@@ -1,0 +1,40 @@
+{
+  "source": "/Users/lukefornieri/CoreTrack/Views/Core Views/CalorieProgressCardView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Calories today",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld / %lld",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lldg",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 98
+        }
+      }
+    ]
+  },
+  "version": 1
+}
