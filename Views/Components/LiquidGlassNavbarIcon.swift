@@ -7,283 +7,186 @@
 
 import SwiftUI
 
-// MARK: - Navigation Tab Model
-struct NavigationTab: Identifiable, Equatable {
-    let id = UUID()
-    let title: String
-    let icon: String
-    let color: Color
-    let content: () -> AnyView
+struct LiquidGlassNavbarIcon: View {
+    @Binding var selectedTab: String
+    let tabs: [String]
+    let onTabSelected: (String) -> Void
     
-    init<V: View>(title: String, icon: String, color: Color, @ViewBuilder content: @escaping () -> V) {
-        self.title = title
-        self.icon = icon
-        self.color = color
-        self.content = { AnyView(content()) }
-    }
-    
-    static func == (lhs: NavigationTab, rhs: NavigationTab) -> Bool {
-        lhs.id == rhs.id
-    }
-}
-
-// MARK: - Content View Tab Extension
-extension ContentViewTab {
-    var displayName: String {
-        switch self {
-        case .home: return "Home"
-        case .coach: return "Coach"
-        case .voice: return "Voice"
-        case .shop: return "Shop"
-        case .analytics: return "Analytics"
-        case .more: return "More"
-        }
-    }
-    
-    var iconName: String {
-        switch self {
-        case .home: return "house.fill"
-        case .coach: return "brain.head.profile"
-        case .voice: return "calendar.badge.plus"
-        case .shop: return "cart.badge.plus"
-        case .analytics: return "chart.bar.xaxis"
-        case .more: return "gear"
-        }
-    }
-    
-    var color: Color {
-        switch self {
-        case .home: return .blue
-        case .coach: return .green
-        case .voice: return .orange
-        case .shop: return .red
-        case .analytics: return .indigo
-        case .more: return .purple
-        }
-    }
-}
-
-// MARK: - Liquid Glass Navbar Icon (Compact with top-left glass button and dropdown)
-struct LiquidGlassNavbarIcon<TabType: CaseIterable & RawRepresentable & Hashable>: View where TabType.RawValue == String {
-    @Binding var selectedTab: TabType
-    let tabs: [TabType]
-    let onTabSelected: (TabType) -> Void
-    
-    @State private var showQuickDropdown = false
     @State private var buttonScale: CGFloat = 1.0
+    @State private var showDropdown = false
     
-    init(selectedTab: Binding<TabType>, tabs: [TabType], onTabSelected: @escaping (TabType) -> Void) {
-        self._selectedTab = selectedTab
-        self.tabs = tabs
-        self.onTabSelected = onTabSelected
+    private var selectedIconName: String {
+        switch selectedTab {
+        case "Home": return "house.fill"
+        case "Search": return "magnifyingglass"
+        case "Profile": return "person.fill"
+        case "Settings": return "gearshape.fill"
+        default: return "circle.fill"
+        }
     }
     
     var body: some View {
-        HStack(spacing: 12) {
-            VStack(spacing: 12) {
-                // Top-left glass button with fork.knife icon to toggle dropdown
-                AnyView(
-                    Button(action: toggleDropdown) {
-                        Image(systemName: "fork.knife")
-                            .font(.title3.weight(.medium))
-                            .frame(width: 44, height: 44)
-                            .contentShape(Rectangle())
-                    }
-                    .ifAvailableiOS26 {
-                        $0.buttonStyle(.glass)
-                    } fallback: {
-                        $0.modifier(GlassButtonConditionalStyle(scale: $buttonScale))
-                    }
-                )
-                .overlay(
-                    Group {
-                        if showQuickDropdown {
-                            DropdownNavList(
-                                tabs: tabs,
-                                selectedTab: $selectedTab,
-                                onTabSelected: { tab in
-                                    onTabSelected(tab)
-                                    withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
-                                        showQuickDropdown = false
-                                    }
-                                }
-                            )
-                            .glassEffect()
-                            .offset(y: 54)
-                            .transition(.scale.combined(with: .opacity))
-                            .zIndex(1)
-                        }
-                    },
-                    alignment: .topLeading
-                )
-                .padding(.leading, 16)
-                .padding(.top, 10)
-                
-                Spacer()
-            }
-            
-            Spacer()
-        }
-        .frame(height: 64)
-    }
-    
-    private func toggleDropdown() {
-        withAnimation(.easeOut(duration: 0.1)) {
-            buttonScale = 0.95
-        }
-        withAnimation(.spring(response: 0.35, dampingFraction: 0.6).delay(0.1)) {
-            buttonScale = 1.0
-        }
-        
-        withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
-            showQuickDropdown.toggle()
+        if #available(iOS 26.0, *) {
+            liquidGlassMenu
+        } else {
+            fallbackButton
         }
     }
-}
-
-// MARK: - Nav Tab Bar (vertical bar of glass icon buttons)
-private struct NavTabBar<TabType: CaseIterable & RawRepresentable & Hashable>: View where TabType.RawValue == String {
-    let tabs: [TabType]
-    @Binding var selectedTab: TabType
-    let onTabSelected: (TabType) -> Void
     
-    var body: some View {
-        VStack(spacing: 12) {
+    // MARK: - iOS 26+ Liquid Glass Menu
+    @available(iOS 26.0, *)
+    private var liquidGlassMenu: some View {
+        Menu {
             ForEach(tabs, id: \.self) { tab in
-                Button(action: {
+                Button {
                     selectedTab = tab
                     onTabSelected(tab)
-                }) {
-                    Group {
-                        if let contentViewTab = tab as? ContentViewTab {
-                            Image(systemName: contentViewTab.iconName)
-                                .font(.title3)
-                                .foregroundColor(selectedTab == tab ? contentViewTab.color : .white.opacity(0.7))
-                        } else {
-                            Image(systemName: "questionmark.circle")
-                                .font(.title3)
-                                .foregroundColor(selectedTab == tab ? .blue : .white.opacity(0.7))
+                } label: {
+                    HStack {
+                        Image(systemName: iconName(for: tab))
+                            .font(.system(size: 16, weight: .medium))
+                        Text(tab)
+                            .font(.system(size: 16, weight: .medium))
+                        Spacer()
+                        if tab == selectedTab {
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(.blue)
                         }
                     }
-                    .frame(width: 44, height: 44)
-                    .contentShape(Rectangle())
-                }
-                .ifAvailableiOS26 {
-                    $0.buttonStyle(.glass)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(selectedTab == tab ? Color.white.opacity(0.3) : Color.clear, lineWidth: 1)
-                        )
-                } fallback: {
-                    $0.modifier(GlassButtonConditionalStyle(scale: .constant(1)))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(selectedTab == tab ? Color.white.opacity(0.3) : Color.clear, lineWidth: 1)
-                        )
                 }
             }
-        }
-    }
-}
-
-// MARK: - Dropdown Nav List (glass dropdown with all tabs listed tappable)
-private struct DropdownNavList<TabType: CaseIterable & RawRepresentable & Hashable>: View where TabType.RawValue == String {
-    let tabs: [TabType]
-    @Binding var selectedTab: TabType
-    let onTabSelected: (TabType) -> Void
-    
-    private func row(for tab: TabType) -> some View {
-        HStack(spacing: 12) {
-            if let contentViewTab = tab as? ContentViewTab {
-                Image(systemName: contentViewTab.iconName)
-                    .foregroundColor(selectedTab == tab ? contentViewTab.color : .white.opacity(0.7))
-                    .font(.title3)
-                Text(contentViewTab.displayName)
-                    .foregroundColor(selectedTab == tab ? contentViewTab.color : .white.opacity(0.7))
-            } else {
-                Image(systemName: "questionmark.circle")
-                    .foregroundColor(selectedTab == tab ? .blue : .white.opacity(0.7))
-                    .font(.title3)
-                Text(String(describing: tab))
-                    .foregroundColor(selectedTab == tab ? .blue : .white.opacity(0.7))
-            }
-            Spacer()
-            if selectedTab == tab {
-                Image(systemName: "checkmark")
-                    .foregroundColor(.white.opacity(0.7))
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 10)
-    }
-    
-    var body: some View {
-        Group {
-            if #available(iOS 26, *) {
-                VStack(spacing: 0) {
-                    ForEach(tabs.indices, id: \.self) { idx in
-                        let tab = tabs[idx]
-                        tabRow(for: tab, idx: idx)
-                    }
-                }
-                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                .glassEffect()
-                .frame(minWidth: 180, maxWidth: 280)
-            } else {
-                // Fallback for earlier iOS versions
-                VStack(spacing: 0) {
-                    ForEach(tabs.indices, id: \.self) { idx in
-                        let tab = tabs[idx]
-                        tabRow(for: tab, idx: idx)
-                    }
-                }
-                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                .background(.glass)
+        } label: {
+            Image(systemName: selectedIconName)
+                .font(.system(size: 20, weight: .medium))
+                .foregroundColor(.primary)
+                .frame(width: 44, height: 44)
+                .glassButtonStyleCompatible(scale: $buttonScale)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 14)
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
                         .stroke(Color.white.opacity(0.15), lineWidth: 1)
                 )
-                .shadow(color: Color.white.opacity(0.1), radius: 8, x: 0, y: 0)
-                .frame(minWidth: 180, maxWidth: 280)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(.leading, 10)
+        .padding(.top, 10)
+    }
+    
+    // MARK: - Fallback for iOS < 26
+    private var fallbackButton: some View {
+        VStack {
+            Button {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    showDropdown.toggle()
+                }
+            } label: {
+                Image(systemName: selectedIconName)
+                    .font(.system(size: 20, weight: .medium))
+                    .foregroundColor(.primary)
+                    .frame(width: 44, height: 44)
+                    .glassButtonStyleCompatible(scale: $buttonScale)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                    )
+            }
+            .scaleEffect(buttonScale)
+            .onTapGesture {
+                withAnimation(.easeInOut(duration: 0.1)) {
+                    buttonScale = 0.95
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    withAnimation(.easeInOut(duration: 0.1)) {
+                        buttonScale = 1.0
+                    }
+                }
+            }
+            
+            if showDropdown {
+                fallbackDropdown
+                    .transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .top)))
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.leading, 10)
+        .padding(.top, 10)
     }
-
-    @ViewBuilder
-    private func tabRow(for tab: TabType, idx: Int) -> some View {
+    
+    // MARK: - Fallback Dropdown
+    private var fallbackDropdown: some View {
         VStack(spacing: 0) {
-            if #available(iOS 26, *) {
-                Button(action: {
+            ForEach(Array(tabs.enumerated()), id: \.offset) { index, tab in
+                Button {
                     selectedTab = tab
                     onTabSelected(tab)
-                }) {
-                    row(for: tab)
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        showDropdown = false
+                    }
+                } label: {
+                    HStack {
+                        Image(systemName: iconName(for: tab))
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(.primary)
+                        Text(tab)
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(.primary)
+                        Spacer()
+                        if tab == selectedTab {
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(.blue)
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
                 }
-                .buttonStyle(.glass)
-                .background(
-                    selectedTab == tab ? Color.white.opacity(0.1) : Color.clear
-                )
-            } else {
-                Button(action: {
-                    selectedTab = tab
-                    onTabSelected(tab)
-                }) {
-                    row(for: tab)
+                .buttonStyle(.plain)
+                
+                if index < tabs.count - 1 {
+                    Divider()
+                        .background(Color.white.opacity(0.1))
                 }
-                .buttonStyle(GlassButtonStyle(scale: .constant(1)))
-                .background(
-                    selectedTab == tab ? Color.white.opacity(0.1) : Color.clear
-                )
             }
-            if idx != tabs.count - 1 {
-                Divider()
-                    .background(Color.white.opacity(0.1))
-            }
+        }
+        .background(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(.ultraThinMaterial)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .stroke(Color.white.opacity(0.15), lineWidth: 1)
+        )
+        .shadow(color: Color.white.opacity(0.1), radius: 6, x: 0, y: 0)
+        .frame(minWidth: 180, maxWidth: 280)
+        .padding(.top, 8)
+    }
+    
+    // MARK: - Helper Methods
+    private func iconName(for tab: String) -> String {
+        switch tab {
+        case "Home": return "house.fill"
+        case "Search": return "magnifyingglass"
+        case "Profile": return "person.fill"
+        case "Settings": return "gearshape.fill"
+        default: return "circle.fill"
         }
     }
 }
 
-// MARK: - Glass Button Style (scaling & glass)
+// MARK: - Glass Button Style Extension
+extension View {
+    @ViewBuilder
+    func glassButtonStyleCompatible(scale: Binding<CGFloat>) -> some View {
+        if #available(iOS 26.0, *) {
+            self.buttonStyle(.glass)
+        } else {
+            self.buttonStyle(GlassButtonStyle(scale: scale))
+        }
+    }
+}
+
+// MARK: - Fallback Glass Button Style
 struct GlassButtonStyle: ButtonStyle {
     @Binding var scale: CGFloat
     
@@ -292,87 +195,22 @@ struct GlassButtonStyle: ButtonStyle {
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(.ultraThinMaterial)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .stroke(Color.white.opacity(0.15), lineWidth: 1)
-                    )
+                    .opacity(configuration.isPressed ? 0.8 : 1.0)
             )
-            .shadow(color: Color.white.opacity(0.1), radius: 6, x: 0, y: 0)
-            .scaleEffect(scale)
-            .animation(.easeOut(duration: 0.1), value: scale)
-            .onChange(of: configuration.isPressed) { oldValue, newValue in
-                if newValue {
-                    scale = 0.95
-                } else {
-                    withAnimation(.spring(response: 0.35, dampingFraction: 0.6)) {
-                        scale = 1.0
-                    }
-                }
-            }
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
     }
 }
 
-// VisualEffectBlur for iOS 15+ compatibility (wraps UIKit blur)
-struct VisualEffectBlur: UIViewRepresentable {
-    var blurStyle: UIBlurEffect.Style
-    
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        UIVisualEffectView(effect: UIBlurEffect(style: blurStyle))
-    }
-    
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
-        uiView.effect = UIBlurEffect(style: blurStyle)
-    }
-}
-
-private struct GlassButtonConditionalStyle: ViewModifier {
-    @Binding var scale: CGFloat
-    func body(content: Content) -> some View {
-        if #available(iOS 26, *) {
-            content.buttonStyle(.glass)
-        } else {
-            content.buttonStyle(GlassButtonStyle(scale: $scale))
+// MARK: - Preview
+#Preview {
+    LiquidGlassNavbarIcon(
+        selectedTab: .constant("Home"),
+        tabs: ["Home", "Search", "Profile", "Settings"],
+        onTabSelected: { tab in
+            print("Selected: \(tab)")
         }
-    }
+    )
+    .preferredColorScheme(.dark)
 }
-
-// MARK: - View Extension for iOS 26+ conditional modifiers
-extension View {
-    @ViewBuilder
-    func ifAvailableiOS26<Content: View>(@ViewBuilder _ iOS26Plus: (Self) -> Content, fallback: (Self) -> Content) -> some View {
-        if #available(iOS 26, *) {
-            iOS26Plus(self)
-        } else {
-            fallback(self)
-        }
-    }
-}
-
-#if DEBUG
-struct LiquidGlassNavbarIcon_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            LinearGradient(
-                colors: [Color.blue.opacity(0.7), Color.purple.opacity(0.7)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-            
-            VStack {
-                LiquidGlassNavbarIcon(
-                    selectedTab: .constant(ContentViewTab.home),
-                    tabs: Array(ContentViewTab.allCases),
-                    onTabSelected: { tab in
-                        print("Selected tab: \(tab)")
-                    }
-                )
-                Spacer()
-            }
-        }
-        .preferredColorScheme(.dark)
-        .previewDevice("iPhone 15 Pro")
-    }
-}
-#endif
 

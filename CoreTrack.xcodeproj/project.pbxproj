@@ -8,14 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		0B2709982E33A95E001FEDD2 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2709972E33A95D001FEDD2 /* LaunchScreen.swift */; };
+		0B2B954F2E34998100AC5ED6 /* LiquidGlassNavbarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2B954E2E34998100AC5ED6 /* LiquidGlassNavbarIcon.swift */; };
 		0B46E48C2E3368C3009AB7EF /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4882E3368C3009AB7EF /* ChatManager.swift */; };
 		0B46E48D2E3368C3009AB7EF /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4892E3368C3009AB7EF /* NotificationManager.swift */; };
 		0B46E48E2E3368C3009AB7EF /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E48A2E3368C3009AB7EF /* UserManager.swift */; };
 		0B46E4912E3368D8009AB7EF /* FoodDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E48F2E3368D8009AB7EF /* FoodDataManager.swift */; };
-		0B46E4982E3368E1009AB7EF /* SmartInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4952E3368E1009AB7EF /* SmartInputBar.swift */; };
 		0B46E4992E3368E1009AB7EF /* FoodEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4932E3368E1009AB7EF /* FoodEntry.swift */; };
 		0B46E49A2E3368E1009AB7EF /* ChatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4922E3368E1009AB7EF /* ChatType.swift */; };
-		0B46E49B2E3368E1009AB7EF /* UniversalNavbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4962E3368E1009AB7EF /* UniversalNavbar.swift */; };
 		0B46E49C2E3368E1009AB7EF /* NutritionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4942E3368E1009AB7EF /* NutritionData.swift */; };
 		0B46E4A82E3368E9009AB7EF /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4A62E3368E9009AB7EF /* WeatherManager.swift */; };
 		0B46E4A92E3368E9009AB7EF /* NutritionAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E49D2E3368E9009AB7EF /* NutritionAnalyzer.swift */; };
@@ -43,13 +42,14 @@
 		0B46E4D92E3368F7009AB7EF /* VoiceMealPlannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4C32E3368F7009AB7EF /* VoiceMealPlannerView.swift */; };
 		0B46E4DA2E3368F7009AB7EF /* TypingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4B92E3368F7009AB7EF /* TypingIndicator.swift */; };
 		0B46E4DB2E3368F7009AB7EF /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4B82E3368F7009AB7EF /* ImagePicker.swift */; };
-		0B46E4DC2E3368F7009AB7EF /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4BE2E3368F7009AB7EF /* MainView.swift */; };
+		0B46E4DC2E3368F7009AB7EF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4BE2E3368F7009AB7EF /* ContentView.swift */; };
 		0B46E4DD2E3368F7009AB7EF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4C12E3368F7009AB7EF /* SettingsView.swift */; };
 		0B46E4DE2E3368F7009AB7EF /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4B72E3368F7009AB7EF /* GlassCard.swift */; };
 		0B46E4DF2E3368F8009AB7EF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0B46E4CB2E3368F7009AB7EF /* README.md */; };
 		0B46E4E32E336905009AB7EF /* CoreTrackApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4E22E336905009AB7EF /* CoreTrackApp.swift */; };
 		0B46E4E52E33690B009AB7EF /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B46E4E42E33690B009AB7EF /* ServiceManager.swift */; };
 		0B46E4E82E336A14009AB7EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B46E4E72E336A14009AB7EF /* Assets.xcassets */; };
+		0BB813EE2E34451700BD06A5 /* LiquidGlassInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB813EC2E34451700BD06A5 /* LiquidGlassInputBar.swift */; };
 		0BE6A2E22E3396DA00566761 /* CoachTabContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE6A2E12E3396DA00566761 /* CoachTabContentView.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +58,7 @@
 		0B27098F2E33A2F2001FEDD2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		0B2709962E33A54C001FEDD2 /* CoreTrackRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoreTrackRelease.entitlements; sourceTree = "<group>"; };
 		0B2709972E33A95D001FEDD2 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
+		0B2B954E2E34998100AC5ED6 /* LiquidGlassNavbarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassNavbarIcon.swift; sourceTree = "<group>"; };
 		0B46E47A2E336862009AB7EF /* CoreTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B46E4882E3368C3009AB7EF /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		0B46E4892E3368C3009AB7EF /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -66,8 +67,6 @@
 		0B46E4922E3368E1009AB7EF /* ChatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatType.swift; sourceTree = "<group>"; };
 		0B46E4932E3368E1009AB7EF /* FoodEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodEntry.swift; sourceTree = "<group>"; };
 		0B46E4942E3368E1009AB7EF /* NutritionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionData.swift; sourceTree = "<group>"; };
-		0B46E4952E3368E1009AB7EF /* SmartInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartInputBar.swift; sourceTree = "<group>"; };
-		0B46E4962E3368E1009AB7EF /* UniversalNavbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalNavbar.swift; sourceTree = "<group>"; };
 		0B46E49D2E3368E9009AB7EF /* NutritionAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionAnalyzer.swift; sourceTree = "<group>"; };
 		0B46E49F2E3368E9009AB7EF /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
 		0B46E4A02E3368E9009AB7EF /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
@@ -86,7 +85,7 @@
 		0B46E4BB2E3368F7009AB7EF /* AICoachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICoachView.swift; sourceTree = "<group>"; };
 		0B46E4BC2E3368F7009AB7EF /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
 		0B46E4BD2E3368F7009AB7EF /* CalorieProgressCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalorieProgressCardView.swift; sourceTree = "<group>"; };
-		0B46E4BE2E3368F7009AB7EF /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		0B46E4BE2E3368F7009AB7EF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0B46E4BF2E3368F7009AB7EF /* ModernAddFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernAddFoodView.swift; sourceTree = "<group>"; };
 		0B46E4C02E3368F7009AB7EF /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		0B46E4C12E3368F7009AB7EF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -103,6 +102,7 @@
 		0B46E4E42E33690B009AB7EF /* ServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 		0B46E4E62E336915009AB7EF /* Core Track.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Core Track.entitlements"; sourceTree = "<group>"; };
 		0B46E4E72E336A14009AB7EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0BB813EC2E34451700BD06A5 /* LiquidGlassInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassInputBar.swift; sourceTree = "<group>"; };
 		0BE6A2E12E3396DA00566761 /* CoachTabContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachTabContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -178,8 +178,6 @@
 				0B46E4922E3368E1009AB7EF /* ChatType.swift */,
 				0B46E4932E3368E1009AB7EF /* FoodEntry.swift */,
 				0B46E4942E3368E1009AB7EF /* NutritionData.swift */,
-				0B46E4952E3368E1009AB7EF /* SmartInputBar.swift */,
-				0B46E4962E3368E1009AB7EF /* UniversalNavbar.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -220,8 +218,10 @@
 		0B46E4BA2E3368F7009AB7EF /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				0BB813EC2E34451700BD06A5 /* LiquidGlassInputBar.swift */,
 				0B46E4B62E3368F7009AB7EF /* ChatBubbleView.swift */,
 				0B46E4B72E3368F7009AB7EF /* GlassCard.swift */,
+				0B2B954E2E34998100AC5ED6 /* LiquidGlassNavbarIcon.swift */,
 				0B46E4B82E3368F7009AB7EF /* ImagePicker.swift */,
 				0B46E4B92E3368F7009AB7EF /* TypingIndicator.swift */,
 				0B2709972E33A95D001FEDD2 /* LaunchScreen.swift */,
@@ -236,7 +236,7 @@
 				0B46E4BB2E3368F7009AB7EF /* AICoachView.swift */,
 				0B46E4BC2E3368F7009AB7EF /* AnalyticsView.swift */,
 				0B46E4BD2E3368F7009AB7EF /* CalorieProgressCardView.swift */,
-				0B46E4BE2E3368F7009AB7EF /* MainView.swift */,
+				0B46E4BE2E3368F7009AB7EF /* ContentView.swift */,
 				0B46E4BF2E3368F7009AB7EF /* ModernAddFoodView.swift */,
 				0B46E4C02E3368F7009AB7EF /* PaywallView.swift */,
 				0B46E4C12E3368F7009AB7EF /* SettingsView.swift */,
@@ -345,7 +345,6 @@
 				0B46E4B42E3368F1009AB7EF /* Extensions.swift in Sources */,
 				0B46E4B52E3368F1009AB7EF /* UIConstants.swift in Sources */,
 				0B46E48C2E3368C3009AB7EF /* ChatManager.swift in Sources */,
-				0B46E4982E3368E1009AB7EF /* SmartInputBar.swift in Sources */,
 				0B46E4E52E33690B009AB7EF /* ServiceManager.swift in Sources */,
 				0B46E4A82E3368E9009AB7EF /* WeatherManager.swift in Sources */,
 				0B46E4A92E3368E9009AB7EF /* NutritionAnalyzer.swift in Sources */,
@@ -362,6 +361,8 @@
 				0B46E4CD2E3368F7009AB7EF /* CalorieProgressCardView.swift in Sources */,
 				0B46E4CE2E3368F7009AB7EF /* AppPreferencesView.swift in Sources */,
 				0B46E4CF2E3368F7009AB7EF /* DataManagementView.swift in Sources */,
+				0BB813EE2E34451700BD06A5 /* LiquidGlassInputBar.swift in Sources */,
+				0B2B954F2E34998100AC5ED6 /* LiquidGlassNavbarIcon.swift in Sources */,
 				0B46E4D02E3368F7009AB7EF /* AnalyticsView.swift in Sources */,
 				0B46E4E32E336905009AB7EF /* CoreTrackApp.swift in Sources */,
 				0B46E4D12E3368F7009AB7EF /* AICoachView.swift in Sources */,
@@ -375,11 +376,10 @@
 				0B46E4D92E3368F7009AB7EF /* VoiceMealPlannerView.swift in Sources */,
 				0B46E4DA2E3368F7009AB7EF /* TypingIndicator.swift in Sources */,
 				0B46E4DB2E3368F7009AB7EF /* ImagePicker.swift in Sources */,
-				0B46E4DC2E3368F7009AB7EF /* MainView.swift in Sources */,
+				0B46E4DC2E3368F7009AB7EF /* ContentView.swift in Sources */,
 				0B46E4DD2E3368F7009AB7EF /* SettingsView.swift in Sources */,
 				0B46E4DE2E3368F7009AB7EF /* GlassCard.swift in Sources */,
 				0B46E49A2E3368E1009AB7EF /* ChatType.swift in Sources */,
-				0B46E49B2E3368E1009AB7EF /* UniversalNavbar.swift in Sources */,
 				0B46E49C2E3368E1009AB7EF /* NutritionData.swift in Sources */,
 				0B46E48D2E3368C3009AB7EF /* NotificationManager.swift in Sources */,
 				0B46E48E2E3368C3009AB7EF /* UserManager.swift in Sources */,

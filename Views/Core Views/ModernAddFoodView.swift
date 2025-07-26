@@ -2,15 +2,45 @@ import SwiftUI
 
 @MainActor
 struct ModernAddFoodView: View {
+    @Binding var selectedTab: ContentViewTab
     @EnvironmentObject var dataManager: FoodDataManager
     @EnvironmentObject var chatManager: ChatManager
     @EnvironmentObject var aiService: AIService
     @State private var textInput = ""
     @State private var isLoading = false
+    @State private var selectedTabString: String = "Home"
+    
+    // Map ContentViewTab to String for LiquidGlassNavbarIcon
+    private func tabToString(_ tab: ContentViewTab) -> String {
+        return tab.title
+    }
+    
+    private func stringToTab(_ string: String) -> ContentViewTab {
+        switch string {
+        case "Home": return .home
+        case "Coach": return .coach
+        case "Voice": return .voice
+        case "Shop": return .shop
+        case "Analytics": return .analytics
+        case "More": return .more
+        default: return .home
+        }
+    }
     
     var body: some View {
         let _ = print("🔄 ModernAddFoodView body rendering")
-        return VStack(spacing: 20) {
+        return VStack(spacing: 0) {
+            // Navigation
+            LiquidGlassNavbarIcon(
+                selectedTab: $selectedTabString,
+                tabs: ["Home", "Coach", "Voice", "Shop", "Analytics", "More"],
+                onTabSelected: { tabString in
+                    selectedTabString = tabString
+                    selectedTab = stringToTab(tabString)
+                }
+            )
+            .zIndex(1000)
+            
             // Header
             VStack(spacing: 8) {
                 Text("Add Food")
@@ -22,7 +52,7 @@ struct ModernAddFoodView: View {
                     .font(.subheadline)
                     .foregroundColor(.white.opacity(0.8))
             }
-            .padding(.top, 40)
+            .padding(.top, 20)
             
             // Chat area
             ScrollView {
@@ -36,35 +66,42 @@ struct ModernAddFoodView: View {
                 }
                 .padding(.horizontal)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             
-            // Input area
-            HStack(spacing: 12) {
-                TextField("What did you eat?", text: $textInput)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 12)
-                    .glassEffect(shape: RoundedRectangle(cornerRadius: 25))
-                    .foregroundColor(.white)
-                
-                Button(action: sendMessage) {
-                    Image(systemName: "arrow.up.circle.fill")
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .frame(width: 44, height: 44)
-                        .glassEffect(shape: Circle())
+            Spacer()
+            
+            // Input Bar
+            LiquidGlassInputBar(
+                text: $textInput,
+                placeholder: "Describe what you ate...",
+                quickActions: [
+                    QuickAction(title: "Voice", icon: "mic.fill", color: .orange) {
+                        // Handle voice input
+                    },
+                    QuickAction(title: "Camera", icon: "camera.fill", color: .blue) {
+                        // Handle camera input
+                    },
+                    QuickAction(title: "Barcode", icon: "barcode", color: .green) {
+                        // Handle barcode scan
+                    }
+                ],
+                onSend: { message in
+                    sendMessage()
+                },
+                onMicTap: {
+                    // Handle mic tap
+                },
+                onCameraTap: {
+                    // Handle camera tap
                 }
-                .disabled(textInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isLoading)
-            }
-            .padding(.horizontal)
-            .padding(.bottom, 20)
-        }
-        .background(
-            LinearGradient(
-                colors: [Color.blue.opacity(0.7), Color.purple.opacity(0.7)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
             )
-            .ignoresSafeArea()
-        )
+        }
+        .onAppear {
+            selectedTabString = tabToString(selectedTab)
+        }
+        .onChange(of: selectedTab) {
+            selectedTabString = tabToString(selectedTab)
+        }
     }
     
     private func sendMessage() {
@@ -118,7 +155,7 @@ struct ModernAddFoodView: View {
 }
 
 #Preview {
-    ModernAddFoodView()
+    ModernAddFoodView(selectedTab: .constant(.home))
         .environmentObject(FoodDataManager())
         .environmentObject(ChatManager())
         .environmentObject(AIService())

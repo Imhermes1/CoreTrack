@@ -10,7 +10,7 @@ struct GlassEffectModifier<S: Shape>: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .background(.ultraThinMaterial, in: shape)
+            .background(shape.fill(.clear))
             .overlay(
                 shape.stroke(Color.white.opacity(0.2), lineWidth: 1)
             )
@@ -25,23 +25,27 @@ struct GlassBackgroundModifier: ViewModifier {
     }
 
     func body(content: Content) -> some View {
-        content.background(.ultraThinMaterial)
+        content.background(.clear)
     }
 }
 
 struct AdaptiveGlassButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(.ultraThinMaterial)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.white.opacity(0.2), lineWidth: 1)
-                    )
-            )
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
+        if #available(iOS 26.0, *) {
+            configuration.label.buttonStyle(.glass)
+        } else {
+            configuration.label
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(.clear)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                        )
+                )
+                .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+                .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
+        }
     }
 }
 

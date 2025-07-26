@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @Binding var selectedTab: ContentViewTab
     @EnvironmentObject var notificationManager: NotificationManager
     @EnvironmentObject var dataManager: FoodDataManager
     @State private var selectedSection: SettingsSection = .account
-    
-    let onTabChange: (MainViewTab) -> Void
+    @State private var selectedTabString: String = "More"
+    @State private var searchText: String = ""
     
     enum SettingsSection: String, CaseIterable {
         case account = "Account"
@@ -32,130 +33,157 @@ struct SettingsView: View {
         }
     }
     
-    init(onTabChange: @escaping (MainViewTab) -> Void = { _ in }) {
-        self.onTabChange = onTabChange
+    // Map ContentViewTab to String for LiquidGlassNavbarIcon
+    private func tabToString(_ tab: ContentViewTab) -> String {
+        return tab.title
+    }
+    
+    private func stringToTab(_ string: String) -> ContentViewTab {
+        switch string {
+        case "Home": return .home
+        case "Coach": return .coach
+        case "Voice": return .voice
+        case "Shop": return .shop
+        case "Analytics": return .analytics
+        case "More": return .more
+        default: return .more
+        }
     }
 
     var body: some View {
-        ZStack {
-            // Background
-            LinearGradient(
-                colors: [Color.purple.opacity(0.8), Color.blue.opacity(0.6)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-            
-            VStack(spacing: 0) {
-                // Header
-                headerView
-                
-                // Content
-                HStack(spacing: 0) {
-                    // Sidebar
-                    sidebarView
-                    
-                    // Main content
-                    mainContentView
+        VStack(spacing: 0) {
+            // Navigation
+            LiquidGlassNavbarIcon(
+                selectedTab: $selectedTabString,
+                tabs: ["Home", "Coach", "Voice", "Shop", "Analytics", "More"],
+                onTabSelected: { tabString in
+                    selectedTabString = tabString
+                    selectedTab = stringToTab(tabString)
                 }
-            }
-        }
-        .navigationBarHidden(true)
-    }
-    
-    private var headerView: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
+            )
+            .zIndex(1000)
+            
+            // Header
+            VStack(spacing: 8) {
                 Text("Settings")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
-                Text("Customise your experience")
+                
+                Text("Customize your experience")
                     .font(.subheadline)
                     .foregroundColor(.white.opacity(0.8))
             }
+            .padding(.top, 20)
+            
+            // Settings Content
+            ScrollView {
+                LazyVStack(spacing: 16) {
+                    ForEach(SettingsSection.allCases, id: \.rawValue) { section in
+                        settingsCard(for: section)
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.top, 20)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             
             Spacer()
             
-            Button(action: {
-                onTabChange(.home)
-            }) {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.title2)
-                    .foregroundColor(.white.opacity(0.8))
-            }
-        }
-        .padding(.horizontal, 20)
-        .padding(.top, 10)
-        .padding(.bottom, 20)
-    }
-    
-    private var sidebarView: some View {
-        VStack(spacing: 8) {
-            ForEach(SettingsSection.allCases, id: \.self) { section in
-                sidebarButton(for: section)
-            }
-            Spacer()
-        }
-        .padding(.horizontal, 16)
-        .frame(width: 200)
-        .glassBackground(displayMode: .automatic)
-    }
-    
-    private func sidebarButton(for section: SettingsSection) -> some View {
-        Button(action: {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                selectedSection = section
-            }
-        }) {
-            HStack(spacing: 12) {
-                Image(systemName: section.icon)
-                    .font(.title3)
-                    .foregroundColor(selectedSection == section ? .white : .white.opacity(0.7))
-                    .frame(width: 24)
-                
-                Text(section.rawValue)
-                    .font(.body)
-                    .fontWeight(selectedSection == section ? .semibold : .medium)
-                    .foregroundColor(selectedSection == section ? .white : .white.opacity(0.7))
-                
-                Spacer()
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(selectedSection == section ? Color.white.opacity(0.2) : Color.clear)
+            // Input Bar for settings search
+            LiquidGlassInputBar(
+                text: $searchText,
+                placeholder: "Search settings...",
+                quickActions: [
+                    QuickAction(title: "Account", icon: "person.circle", color: .blue) {
+                        selectedSection = .account
+                    },
+                    QuickAction(title: "Export", icon: "square.and.arrow.up", color: .green) {
+                        // Handle export action
+                    },
+                    QuickAction(title: "Help", icon: "questionmark.circle", color: .orange) {
+                        // Handle help action
+                    }
+                ],
+                onSend: { query in
+                    // Handle settings search
+                    searchSettings(query: query)
+                },
+                onMicTap: {
+                    // Handle voice search for settings
+                },
+                onCameraTap: {
+                    // Handle QR code settings import
+                }
             )
         }
-        .buttonStyle(PlainButtonStyle())
+        .onAppear {
+            selectedTabString = tabToString(selectedTab)
+        }
+        .onChange(of: selectedTab) { _, newTab in
+            selectedTabString = tabToString(newTab)
+        }
     }
     
-    private var mainContentView: some View {
-        ScrollView {
-            VStack(spacing: 24) {
-                switch selectedSection {
-                case .account:
-                    AccountSettingsView()
-                case .nutrition:
-                    NutritionSettingsView()
-                case .notifications:
-                    NotificationSettingsView()
-                case .preferences:
-                    AppPreferencesView()
-                case .data:
-                    DataManagementView()
+    @ViewBuilder
+    private func settingsCard(for section: SettingsSection) -> some View {
+        Button {
+            selectedSection = section
+        } label: {
+            HStack(spacing: 16) {
+                Image(systemName: section.icon)
+                    .font(.title2)
+                    .foregroundColor(.white)
+                    .frame(width: 24)
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(section.rawValue)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    
+                    Text(sectionDescription(for: section))
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.7))
+                        .multilineTextAlignment(.leading)
                 }
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundColor(.white.opacity(0.6))
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 20)
+            .padding(16)
         }
-        .glassBackground(displayMode: .automatic)
+        .buttonStyle(.plain)
+        .background(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(.ultraThinMaterial)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .stroke(Color.white.opacity(0.15), lineWidth: 1)
+        )
+    }
+    
+    private func sectionDescription(for section: SettingsSection) -> String {
+        switch section {
+        case .account: return "Profile, subscription, and account details"
+        case .nutrition: return "Goals, macros, and dietary preferences"
+        case .notifications: return "Alerts, reminders, and push notifications"
+        case .preferences: return "App behavior and personalization"
+        case .data: return "Export, import, and data management"
+        }
+    }
+    
+    private func searchSettings(query: String) {
+        // Handle settings search functionality
+        searchText = ""
     }
 }
 
 #Preview {
-    SettingsView()
+    SettingsView(selectedTab: .constant(.more))
         .environmentObject(NotificationManager.shared)
         .environmentObject(FoodDataManager())
-} 
+}

@@ -2,11 +2,13 @@ import SwiftUI
 import AVFoundation
 
 @MainActor
-struct AIMealPlannerView: View {
-    // MARK: - Injected Services
+struct VoiceMealPlannerView: View {
+    @Binding var selectedTab: ContentViewTab
     @EnvironmentObject var aiService: AIService
+    @EnvironmentObject var chatManager: ChatManager
 
     // MARK: - State
+    @State private var textInput = ""
     @State private var goals = ""
     @State private var preferences = ""
     @State private var restrictions = ""
@@ -14,92 +16,115 @@ struct AIMealPlannerView: View {
     @State private var generatedPlan = ""
     @State private var isGenerating = false
     @State private var showingPlan = false
+    @State private var selectedTabString: String = "Voice"
 
     // MARK: - Constants
     let timeframeOptions = ["3 days", "1 week", "2 weeks", "1 month"]
-    let onTabChange: (MainViewTab) -> Void
-
-    // MARK: - Init
-    init(onTabChange: @escaping (MainViewTab) -> Void = { _ in }) {
-        self.onTabChange = onTabChange
+    
+    // Map ContentViewTab to String for LiquidGlassNavbarIcon
+    private func tabToString(_ tab: ContentViewTab) -> String {
+        return tab.title
+    }
+    
+    private func stringToTab(_ string: String) -> ContentViewTab {
+        switch string {
+        case "Home": return .home
+        case "Coach": return .coach
+        case "Voice": return .voice
+        case "Shop": return .shop
+        case "Analytics": return .analytics
+        case "More": return .more
+        default: return .voice
+        }
     }
 
-    // MARK: - Body
     var body: some View {
-        ZStack {
-            // Background gradient
-            LinearGradient(
-                colors: [Color.green.opacity(0.08), Color.blue.opacity(0.08)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
+        VStack(spacing: 0) {
+            // Navigation
+            LiquidGlassNavbarIcon(
+                selectedTab: $selectedTabString,
+                tabs: ["Home", "Coach", "Voice", "Shop", "Analytics", "More"],
+                onTabSelected: { tabString in
+                    selectedTabString = tabString
+                    selectedTab = stringToTab(tabString)
+                }
             )
-            .blur(radius: 30)
-            .overlay(Color.white.opacity(0.02).blur(radius: 15))
-            .ignoresSafeArea()
-
+            .zIndex(1000)
+            
+            // Header
+            VStack(spacing: 8) {
+                Text("Meal Planner")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                
+                Text("AI-powered meal planning")
+                    .font(.subheadline)
+                    .foregroundColor(.white.opacity(0.8))
+            }
+            .padding(.top, 20)
+            
+            // Content
             ScrollView {
                 VStack(spacing: 24) {
-                    header
-
                     inputForm
                     generateButton
                     generatedPlanView
-                    Spacer(minLength: 100)
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 16)
+                .padding(.top, 20)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            Spacer()
+            
+            // Input Bar for meal planning
+            LiquidGlassInputBar(
+                text: $textInput,
+                placeholder: "Ask about meal planning...",
+                quickActions: [
+                    QuickAction(title: "Generate", icon: "wand.and.stars", color: .purple) {
+                        generateMealPlan()
+                    },
+                    QuickAction(title: "Preferences", icon: "heart.fill", color: .red) {
+                        // Handle preferences quick action
+                    },
+                    QuickAction(title: "Calendar", icon: "calendar", color: .blue) {
+                        // Handle calendar quick action
+                    }
+                ],
+                onSend: { message in
+                    handleMealPlanRequest(message)
+                },
+                onMicTap: {
+                    // Handle voice input for meal planning
+                },
+                onCameraTap: {
+                    // Handle camera for meal photos
+                }
+            )
+        }
+        .onAppear {
+            selectedTabString = tabToString(selectedTab)
+        }
+        .onChange(of: selectedTab) { _, newTab in
+            selectedTabString = tabToString(newTab)
         }
     }
-
-    // MARK: - Subviews
-
-    private var header: some View {
-        VStack(spacing: 16) {
-            Circle()
-                .frame(width: 80, height: 80)
-                .glassEffect(shape: Circle())
-                .overlay(
-                    Image(systemName: "calendar.badge.plus")
-                        .font(.system(size: 35))
-                        .foregroundColor(.orange)
-                )
-
-            Text("AI Meal Planner")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-
-            Text("Let AI create personalised meal plans based on your goals")
-                .font(.body)
-                .foregroundColor(.white.opacity(0.8))
-                .multilineTextAlignment(.center)
-        }
-        .padding(.top, 20)
-    }
-
+    
+    // MARK: - Views
+    @ViewBuilder
     private var inputForm: some View {
-        VStack(spacing: 20) {
-            InputCard(
-                title: "Your Goals",
-                placeholder: "e.g., Lose weight, build muscle, maintain health",
-                text: $goals
-            )
-            InputCard(
-                title: "Food Preferences",
-                placeholder: "e.g., Mediterranean, vegetarian, high protein",
-                text: $preferences
-            )
-            InputCard(
-                title: "Dietary Restrictions",
-                placeholder: "e.g., Gluten-free, dairy-free, no nuts",
-                text: $restrictions
-            )
-
-            VStack(alignment: .leading, spacing: 12) {
+        VStack(spacing: 16) {
+            inputField(title: "Goals", text: $goals, placeholder: "e.g., Lose weight, gain muscle...")
+            inputField(title: "Preferences", text: $preferences, placeholder: "e.g., Mediterranean, low-carb...")
+            inputField(title: "Restrictions", text: $restrictions, placeholder: "e.g., Vegetarian, gluten-free...")
+            
+            VStack(alignment: .leading, spacing: 8) {
                 Text("Timeframe")
                     .font(.headline)
                     .foregroundColor(.white)
-
+                
                 Picker("Timeframe", selection: $timeframe) {
                     ForEach(timeframeOptions, id: \.self) { option in
                         Text(option).tag(option)
@@ -107,145 +132,164 @@ struct AIMealPlannerView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
             }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(.ultraThinMaterial)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(Color.white.opacity(0.1), lineWidth: 1)
-                    )
-            )
         }
     }
-
+    
+    @ViewBuilder
+    private func inputField(title: String, text: Binding<String>, placeholder: String) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.headline)
+                .foregroundColor(.white)
+            
+            TextField(placeholder, text: text)
+                .textFieldStyle(.plain)
+                .font(.body)
+                .foregroundColor(.primary)
+                .padding(12)
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(.ultraThinMaterial)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                )
+        }
+    }
+    
+    @ViewBuilder
     private var generateButton: some View {
-        Button(action: generateMealPlan) {
+        Button {
+            generateMealPlan()
+        } label: {
             HStack {
                 if isGenerating {
                     ProgressView()
-                        .scaleEffect(0.8)
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                } else {
-                    Image(systemName: "sparkles")
-                        .font(.title2)
+                        .scaleEffect(0.8)
                 }
-
-                Text(isGenerating ? "Creating Your Plan..." : "Generate Meal Plan")
+                Text(isGenerating ? "Generating..." : "Generate Meal Plan")
                     .font(.headline)
-                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
             }
-            .foregroundColor(.white)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(
-                        LinearGradient(
-                            colors: [Color.green, Color.blue],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
-            )
         }
         .disabled(isGenerating || goals.isEmpty)
-        .opacity(goals.isEmpty ? 0.6 : 1.0)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(LinearGradient(
+                    colors: [.orange, .red],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                ))
+                .opacity(isGenerating || goals.isEmpty ? 0.6 : 1.0)
+        )
     }
-
+    
+    @ViewBuilder
     private var generatedPlanView: some View {
-        Group {
-            if showingPlan && !generatedPlan.isEmpty {
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Your Personalised Meal Plan")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-
-                    Text(generatedPlan)
-                        .font(.body)
-                        .foregroundColor(.white.opacity(0.9))
-                        .fixedSize(horizontal: false, vertical: true)
+        if !generatedPlan.isEmpty {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Your Meal Plan")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                
+                Text(generatedPlan)
+                    .font(.body)
+                    .foregroundColor(.white.opacity(0.9))
+                    .multilineTextAlignment(.leading)
+            }
+            .padding(16)
+            .background(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(.ultraThinMaterial)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .stroke(Color.white.opacity(0.15), lineWidth: 1)
+            )
+        }
+    }
+    
+    // MARK: - Methods
+    private func generateMealPlan() {
+        guard !goals.isEmpty else { return }
+        isGenerating = true
+        
+        // Map preferences string to CuisineType(s)
+        let cuisineTypes: [CuisineType] = preferences.split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
+            .compactMap { input in
+                CuisineType.allCases.first { $0.rawValue.lowercased().contains(input) }
+            }
+        let selectedCuisineTypes = cuisineTypes.isEmpty ? [.mediterranean] : cuisineTypes
+        
+        // Map timeframe to CookingTime
+        let cookingTime: CookingTime
+        switch timeframe.lowercased() {
+        case _ where timeframe.contains("day"): cookingTime = .quick
+        case _ where timeframe.contains("week"): cookingTime = .medium
+        case _ where timeframe.contains("month"): cookingTime = .slow
+        default: cookingTime = .medium
+        }
+        
+        // Use default servings and budget
+        let mealPreferences = MealPreferences(
+            cuisine: selectedCuisineTypes,
+            cookingTime: cookingTime,
+            servings: 2,
+            budget: .moderate
+        )
+        
+        Task {
+            do {
+                let mealPlan = try await aiService.generateMealPlan(preferences: mealPreferences)
+                await MainActor.run {
+                    self.generatedPlan = mealPlan.description
+                    self.isGenerating = false
+                    self.showingPlan = true
                 }
-                .padding()
-                .glassEffect(shape: RoundedRectangle(cornerRadius: 16))
-                .transition(.opacity.combined(with: .scale))
+            } catch {
+                await MainActor.run {
+                    self.generatedPlan = "Sorry, I couldn't generate a meal plan right now. Please try again."
+                    self.isGenerating = false
+                }
             }
         }
     }
-
-    // MARK: - Actions
-
-    private func generateMealPlan() {
-        guard !goals.isEmpty else { return }
-
-        isGenerating = true
-        showingPlan = false
-
+    
+    private func handleMealPlanRequest(_ message: String) {
+        // Handle text input for meal planning requests
+        textInput = ""
+        
+        // Add to chat or process the request
+        chatManager.addMessage(text: message, sender: .user, to: .food)
+        
         Task {
             do {
                 let mealPreferences = MealPreferences(
-                    cuisine: [.australian], // Default to Australian
+                    cuisine: [.mediterranean], // Or parse from message if possible
                     cookingTime: .medium,
                     servings: 2,
                     budget: .moderate
                 )
-                
-                let plan = try await aiService.generateMealPlan(preferences: mealPreferences)
-                
+                let response = try await aiService.generateMealPlan(preferences: mealPreferences)
                 await MainActor.run {
-                    generatedPlan = plan.description
-                    isGenerating = false
-                    showingPlan = true
+                    chatManager.addMessage(text: response.description, sender: .coach, to: .food)
                 }
             } catch {
                 await MainActor.run {
-                    generatedPlan = "Sorry, I couldn't generate a meal plan. Please try again."
-                    isGenerating = false
-                    showingPlan = true
+                    chatManager.addMessage(
+                        text: "I'm having trouble with that request. Please try again.",
+                        sender: .coach,
+                        to: .food
+                    )
                 }
             }
         }
     }
 }
 
-// MARK: - Input Card Component
-
-@MainActor
-struct InputCard: View {
-    let title: String
-    let placeholder: String
-    @Binding var text: String
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(title)
-                .font(.headline)
-                .foregroundColor(.white)
-
-            TextField(placeholder, text: $text)
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.white.opacity(0.1))
-                )
-                .foregroundColor(.white)
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.sentences)
-        }
-        .padding()
-        .glassEffect(shape: RoundedRectangle(cornerRadius: 16))
-    }
-}
-
-// Legacy alias for backwards compatibility
-typealias VoiceMealPlannerView = AIMealPlannerView
-
-// MARK: - Preview
-
-struct AIMealPlannerView_Previews: PreviewProvider {
-    static var previews: some View {
-        AIMealPlannerView()
-            .preferredColorScheme(.dark)
-    }
-}

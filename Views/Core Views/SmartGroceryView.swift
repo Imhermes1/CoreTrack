@@ -1,168 +1,185 @@
 import SwiftUI
 
 struct SmartGroceryView: View {
-    let onTabChange: (MainViewTab) -> Void = { _ in }
+    @Binding var selectedTab: ContentViewTab
+    @EnvironmentObject var aiService: AIService
+    @State private var textInput = ""
+    @State private var groceryList: [String] = []
+    @State private var selectedTabString: String = "Shop"
+    
+    // Map ContentViewTab to String for LiquidGlassNavbarIcon
+    private func tabToString(_ tab: ContentViewTab) -> String {
+        return tab.title
+    }
+    
+    private func stringToTab(_ string: String) -> ContentViewTab {
+        switch string {
+        case "Home": return .home
+        case "Coach": return .coach
+        case "Voice": return .voice
+        case "Shop": return .shop
+        case "Analytics": return .analytics
+        case "More": return .more
+        default: return .shop
+        }
+    }
     
     var body: some View {
-        ZStack {
-            // Background
-            LinearGradient(
-                colors: [Color.orange.opacity(0.08), Color.red.opacity(0.08)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .blur(radius: 30)
-            .overlay(Color.white.opacity(0.02).blur(radius: 15))
-            .ignoresSafeArea()
-            
-            VStack(spacing: 32) {
-                Spacer()
-                
-                // Feature Icon
-                ZStack {
-                    Circle()
-                        .frame(width: 120, height: 120)
-                        .glassEffect(shape: Circle())
-                    
-                    Image(systemName: "cart.badge.plus")
-                        .font(.system(size: 50))
-                        .foregroundColor(.orange)
+        VStack(spacing: 0) {
+            // Navigation
+            LiquidGlassNavbarIcon(
+                selectedTab: $selectedTabString,
+                tabs: ["Home", "Coach", "Voice", "Shop", "Analytics", "More"],
+                onTabSelected: { tabString in
+                    selectedTabString = tabString
+                    selectedTab = stringToTab(tabString)
                 }
+            )
+            .zIndex(1000)
+            
+            // Header
+            VStack(spacing: 8) {
+                Text("Smart Grocery")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
                 
-                // Title and Description
-                VStack(spacing: 16) {
-                    Text("Smart Grocery List")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
+                Text("AI-powered shopping lists")
+                    .font(.subheadline)
+                    .foregroundColor(.white.opacity(0.8))
+            }
+            .padding(.top, 20)
+            
+            // Content
+            ScrollView {
+                VStack(spacing: 24) {
+                    // Feature Icon
+                    ZStack {
+                        Circle()
+                            .fill(Material.ultraThinMaterial)
+                            .frame(width: 120, height: 120)
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                            )
+                        
+                        Image(systemName: "cart.badge.plus")
+                            .font(.system(size: 50))
+                            .foregroundColor(.orange)
+                    }
                     
+                    // Coming Soon Badge
                     Text("Coming Soon")
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(.orange)
-                }
-                
-                // Feature Description
-                VStack(spacing: 20) {
-                    Text("AI-powered grocery shopping with direct food ordering")
-                        .font(.headline)
-                        .foregroundColor(.white.opacity(0.9))
-                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .fill(.ultraThinMaterial)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .stroke(Color.orange.opacity(0.3), lineWidth: 1)
+                        )
                     
-                    VStack(spacing: 12) {
-                        GroceryFeatureRow(
-                            icon: "brain.head.profile",
-                            title: "Smart Recommendations",
-                            description: "AI suggests groceries based on your nutrition goals and eating patterns"
-                        )
-                        
-                        GroceryFeatureRow(
-                            icon: "list.bullet.clipboard.fill",
-                            title: "Auto Shopping Lists",
-                            description: "Generate shopping lists from your meal plans and favourite foods"
-                        )
-                        
-                        GroceryFeatureRow(
-                            icon: "storefront.fill",
-                            title: "Direct Food Ordering",
-                            description: "Order food directly through the app from Coles, Woolworths & local stores"
-                        )
-                        
-                        GroceryFeatureRow(
-                            icon: "bicycle",
-                            title: "Delivery Integration",
-                            description: "Connect with DoorDash, Uber Eats, Menulog for restaurant ordering"
-                        )
-                        
-                        GroceryFeatureRow(
-                            icon: "dollarsign.circle.fill",
-                            title: "Budget Tracking",
-                            description: "Track food spending and find healthy options within your budget"
-                        )
-                        
-                        GroceryFeatureRow(
-                            icon: "leaf.fill",
-                            title: "Nutrition Optimised",
-                            description: "Suggestions prioritise your health goals and dietary requirements"
-                        )
-                    }
-                }
-                
-                Spacer()
-                
-                // Special Note about Food Ordering
-                VStack(spacing: 8) {
-                    HStack {
-                        Image(systemName: "star.fill")
-                            .foregroundColor(.yellow)
-                        Text("Food Ordering Feature")
+                    // Feature Description
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Upcoming Features:")
                             .font(.headline)
                             .foregroundColor(.white)
+                        
+                        VStack(alignment: .leading, spacing: 12) {
+                            featureRow(icon: "brain", text: "AI-powered grocery suggestions")
+                            featureRow(icon: "cart.fill", text: "Smart shopping lists")
+                            featureRow(icon: "barcode", text: "Barcode scanning")
+                            featureRow(icon: "location.fill", text: "Store integration")
+                            featureRow(icon: "dollarsign.circle", text: "Price comparison")
+                        }
                     }
-                    
-                    Text("Order food directly from the app and automatically track nutrition data")
-                        .font(.caption)
-                        .foregroundColor(.white.opacity(0.8))
-                        .multilineTextAlignment(.center)
+                    .padding(20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            .fill(.ultraThinMaterial)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                    )
                 }
                 .padding(.horizontal, 16)
-                .padding(.vertical, 12)
-                .glassEffect(shape: RoundedRectangle(cornerRadius: 16))
-                
-                // Coming Soon Badge
-                HStack {
-                    Image(systemName: "clock.badge.checkmark")
-                        .foregroundColor(.orange)
-                    Text("This feature is currently in development")
-                        .font(.caption)
-                        .foregroundColor(.white.opacity(0.7))
-                }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .glassEffect(shape: RoundedRectangle(cornerRadius: 20))
-                
-                Spacer()
+                .padding(.top, 20)
             }
-            .padding(.horizontal, 24)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            Spacer()
+            
+            // Input Bar for grocery shopping
+            LiquidGlassInputBar(
+                text: $textInput,
+                placeholder: "Add items to grocery list...",
+                quickActions: [
+                    QuickAction(title: "Scan", icon: "barcode", color: .blue) {
+                        // Handle barcode scan
+                    },
+                    QuickAction(title: "Recipe", icon: "book.fill", color: .green) {
+                        // Handle recipe-based shopping
+                    },
+                    QuickAction(title: "Store", icon: "storefront", color: .orange) {
+                        // Handle store locator
+                    }
+                ],
+                onSend: { item in
+                    addGroceryItem(item)
+                },
+                onMicTap: {
+                    // Handle voice input for grocery items
+                },
+                onCameraTap: {
+                    // Handle camera for product recognition
+                }
+            )
+        }
+        .onAppear {
+            selectedTabString = tabToString(selectedTab)
+        }
+        .onChange(of: selectedTab) { _, newTab in
+            selectedTabString = tabToString(newTab)
         }
     }
-}
-
-// Use shared FeatureRow component with orange color override
-struct GroceryFeatureRow: View {
-    let icon: String
-    let title: String
-    let description: String
     
-    var body: some View {
-        HStack(spacing: 16) {
+    @ViewBuilder
+    private func featureRow(icon: String, text: String) -> some View {
+        HStack(spacing: 12) {
             Image(systemName: icon)
-                .font(.title2)
+                .font(.system(size: 16, weight: .medium))
                 .foregroundColor(.orange)
-                .frame(width: 32, height: 32)
+                .frame(width: 20)
             
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title)
-                    .font(.headline)
-                    .foregroundColor(.white)
-                
-                Text(description)
-                    .font(.caption)
-                    .foregroundColor(.white.opacity(0.7))
-                    .fixedSize(horizontal: false, vertical: true)
-            }
+            Text(text)
+                .font(.body)
+                .foregroundColor(.white.opacity(0.9))
             
             Spacer()
         }
-        .padding(.horizontal, 16)
+    }
+    
+    private func addGroceryItem(_ item: String) {
+        guard !item.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        
+        groceryList.append(item)
+        textInput = ""
+        
+        // In a real implementation, this would save to database
+        // and potentially use AI to categorize or suggest related items
     }
 }
 
 // MARK: - Preview
 struct SmartGroceryView_Previews: PreviewProvider {
     static var previews: some View {
-        SmartGroceryView()
+        SmartGroceryView(selectedTab: .constant(.shop))
             .preferredColorScheme(.dark)
     }
 }

@@ -1,10 +1,16 @@
-//
-//  MainView.swift
+//  ContentView.swift
 //  Calorie Tracker By Luke
 //
 //  Created by Luke Fornieri on 11/6/2025.
 //
 import SwiftUI
+
+// MARK: - Navigation Action Model
+struct NavAction {
+    let icon: String
+    let color: Color
+    let action: () -> Void
+}
 
 // MARK: – Glow Overlay for Recording / Response
 struct GlowOverlay: View {
@@ -13,18 +19,17 @@ struct GlowOverlay: View {
     var isActive: Bool = true
 
     var body: some View {
-        // Red and purple gradient
         let colorStops = [
-            Color(red: 1.0, green: 0.1, blue: 0.1), // bright red
-            Color(red: 0.8, green: 0.0, blue: 0.8), // purple
-            Color(red: 1.0, green: 0.0, blue: 0.0), // pure red
-            Color(red: 0.6, green: 0.0, blue: 1.0), // bright purple
-            Color(red: 1.0, green: 0.1, blue: 0.1), // bright red
+            Color(red: 1.0, green: 0.1, blue: 0.1),
+            Color(red: 0.8, green: 0.0, blue: 0.8),
+            Color(red: 1.0, green: 0.0, blue: 0.0),
+            Color(red: 0.6, green: 0.0, blue: 1.0),
+            Color(red: 1.0, green: 0.1, blue: 0.1),
         ]
         let clampedLevel = min(max(audioLevel, 0.01), 0.3)
-        let lineWidth = 25 + clampedLevel * 80 // increased base width and range
-        let blurRadius = 20 + clampedLevel * 40 // increased blur for more visible effect
-        let baseOpacity: Double = isActive ? 1.0 : 0.0 // fully opaque when active
+        let lineWidth = 25 + clampedLevel * 80
+        let blurRadius = 20 + clampedLevel * 40
+        let baseOpacity: Double = isActive ? 1.0 : 0.0
 
         return RoundedRectangle(cornerRadius: 0)
             .stroke(
@@ -46,19 +51,54 @@ struct GlowOverlay: View {
     }
 }
 
-// MARK: - Tab Enum (moved outside for accessibility)
-enum MainViewTab: String, CaseIterable {
+// MARK: - Tab Enum
+enum ContentViewTab: String, CaseIterable, Identifiable {
     case home = "home"
     case coach = "coach"
     case voice = "voice"
     case shop = "shop"
     case analytics = "analytics"
     case more = "more"
+    
+    var id: String { rawValue }
+    
+    var title: String {
+        switch self {
+        case .home: return "Home"
+        case .coach: return "Coach"
+        case .voice: return "Voice"
+        case .shop: return "Shop"
+        case .analytics: return "Analytics"
+        case .more: return "More"
+        }
+    }
+    
+    var icon: String {
+        switch self {
+        case .home: return "house.fill"
+        case .coach: return "brain.head.profile"
+        case .voice: return "calendar.badge.plus"
+        case .shop: return "cart.badge.plus"
+        case .analytics: return "chart.bar.xaxis"
+        case .more: return "gear"
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .home: return .blue
+        case .coach: return .green
+        case .voice: return .orange
+        case .shop: return .red
+        case .analytics: return .indigo
+        case .more: return .purple
+        }
+    }
 }
 
-// MARK: – Main View with Glass Cards and Custom Tab Bar
+// MARK: – Main Content View
 @MainActor
-struct MainView: View {
+struct ContentView: View {
     @EnvironmentObject var foodDataManager: FoodDataManager
     @EnvironmentObject var chatManager: ChatManager
     @EnvironmentObject var userManager: UserManager
@@ -68,175 +108,45 @@ struct MainView: View {
     @EnvironmentObject var weatherManager: WeatherManager
     @EnvironmentObject var serviceManager: ServiceManager
     
-
-    @State private var selectedTab: MainViewTab = .home
-    @State private var isVoiceActive: Bool = false
-    @State private var addFoodTextInput: String = ""
-    @FocusState private var addFoodInputFocused: Bool
-    @State private var bottomInset: CGFloat = 0
-    
-    // MARK: - Computed Properties for Navigation
-    
-    private var navbarTitle: String {
-        switch selectedTab {
-        case .home: return "Core Track"
-        case .coach: return "AI Coach"
-        case .voice: return "Meal Planner"
-        case .shop: return "Shopping"
-        case .analytics: return "Analytics"
-        case .more: return "Settings"
-        }
-    }
-    
-    private var navbarSubtitle: String? {
-        switch selectedTab {
-        case .home: return "AI Food Tracking"
-        case .coach: return "Your Nutrition Expert"
-        case .voice: return "Smart Meal Planning"
-        case .shop: return "Smart Grocery Lists"
-        case .analytics: return "Health Insights"
-        case .more: return "Preferences"
-        }
-    }
-    
-    private var navbarActions: [NavAction] {
-        switch selectedTab {
-        case .home:
-            return [
-                NavAction(icon: "plus", color: .white) {
-                    NotificationCenter.default.post(name: Notification.Name("showTextInput"), object: nil)
-                }
-            ]
-        case .coach:
-            return [
-                NavAction(icon: "questionmark.circle", color: .white) {
-                    // Help action
-                }
-            ]
-        case .voice:
-            return [
-                NavAction(icon: "calendar.badge.plus", color: .white) {
-                    // Add to calendar action
-                }
-            ]
-        case .shop:
-            return [
-                NavAction(icon: "cart.badge.plus", color: .white) {
-                    // Add to cart action
-                }
-            ]
-        case .analytics:
-            return [
-                NavAction(icon: "square.and.arrow.up", color: .white) {
-                    // Export action  
-                }
-            ]
-        case .more:
-            return [
-                NavAction(icon: "bell", color: .white) {
-                    // Notifications action
-                }
-            ]
-        }
-    }
+    @State private var selectedTab: ContentViewTab = .home
 
     var body: some View {
-        let _ = print("🔄 MainView body rendering - selectedTab: \(selectedTab)")
-        return ZStack(alignment: .bottom) {
+        ZStack {
+            // Background only - ContentView's single responsibility
             LinearGradient(
                 colors: [Color.blue.opacity(0.7), Color.purple.opacity(0.7)],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
-            .onPreferenceChange(HeightKey.self) { height in
-                bottomInset = height + 16
-            }
 
-
-            // Glow overlay removed - will only show when recording is active
-            
-            VStack(spacing: 0) {
-                // Simple Navigation Bar (temporary fix)
-                HStack {
-                    Text(navbarTitle)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                    Spacer()
-                    Button("Coach") {
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            selectedTab = .coach
-                        }
-                    }
-                    .foregroundColor(.white)
-                }
-                .padding()
-                .background(.ultraThinMaterial)
-                
-                // Content Area
+            // Each view handles its own navigation and input
+            Group {
                 switch selectedTab {
                 case .home:
-                    ModernAddFoodView()
-                    
+                    ModernAddFoodView(selectedTab: $selectedTab)
                 case .coach:
-                    AICoachView(onTabChange: { _ in })
-                    
+                    CoachTabContentView(onTabChange: { tab in
+                        selectedTab = tab
+                    })
                 case .voice:
-                    ScrollView {
-                        VStack(spacing: 16) {
-                            VoiceMealPlannerView()
-                            Spacer(minLength: 100)
-                        }
-                    }
-                    
+                    VoiceMealPlannerView(selectedTab: $selectedTab)
                 case .shop:
-                    ScrollView {
-                        VStack(spacing: 16) {
-                            SmartGroceryView()
-                            Spacer(minLength: 100)
-                        }
-                    }
-                    
+                    SmartGroceryView(selectedTab: $selectedTab)
                 case .analytics:
-                    ScrollView {
-                        VStack(spacing: 16) {
-                            AnalyticsView()
-                            Spacer(minLength: 100)
-                        }
-                    }
-                    
+                    AnalyticsView(selectedTab: $selectedTab)
                 case .more:
-                    ScrollView {
-                        VStack(spacing: 16) {
-                            SettingsView()
-                            Spacer(minLength: 100)
-                        }
-                    }
+                    SettingsView(selectedTab: $selectedTab)
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-
-
         }
-
     }
-
-
 }
 
 // MARK: – Preview
-struct MainView_Previews: PreviewProvider {
+struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
-            .preferredColorScheme(.dark)
-    }
-}
-
-struct HeightKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = max(value, nextValue())
+        ContentView()
     }
 }
 

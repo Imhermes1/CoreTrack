@@ -25,6 +25,14 @@ struct LiquidGlassInputBar: View {
     @State private var isRecording = false
     @State private var recordingScale: CGFloat = 1.0
     
+    // Animation states for liquid effects
+    @State private var plusButtonScale: CGFloat = 1.0
+    @State private var cameraButtonScale: CGFloat = 1.0
+    @State private var micButtonScale: CGFloat = 1.0
+    @State private var sendButtonScale: CGFloat = 1.0
+    @State private var sendButtonRipple: CGFloat = 0.0
+    @State private var textFieldScale: CGFloat = 1.0
+    
     let placeholder: String
     let quickActions: [QuickAction]
     let onSend: (String) -> Void
@@ -32,10 +40,10 @@ struct LiquidGlassInputBar: View {
     let onCameraTap: () -> Void
     
     init(
-        text: Binding<String>,
+        text: Binding<String> = .constant(""),
         placeholder: String = "Message",
         quickActions: [QuickAction] = [],
-        onSend: @escaping (String) -> Void,
+        onSend: @escaping (String) -> Void = { _ in },
         onMicTap: @escaping () -> Void = {},
         onCameraTap: @escaping () -> Void = {}
     ) {
@@ -63,138 +71,183 @@ struct LiquidGlassInputBar: View {
             }
             
             // Main Input Bar
-            HStack(spacing: 12) {
-                // Quick Actions Button
-                Button(action: toggleQuickActions) {
-                    ZStack {
-                        if #available(iOS 26.0, *) {
-                            Circle()
-                                .fill(.clear)
-                                .glassEffect(
-                                    isInteractive: true,
-                                    shape: Circle()
-                                )
-                                .frame(width: 36, height: 36)
-                        } else {
-                            Circle()
-                                .fill(.ultraThinMaterial)
-                                .frame(width: 36, height: 36)
+            if #available(iOS 26.0, *) {
+                GlassEffectContainer {
+                    HStack(spacing: 6) {
+                        // Quick Actions Button with enhanced liquid effect
+                        Button(action: animatedToggleQuickActions) {
+                            Image(systemName: "plus")
+                                .font(.system(size: 18, weight: .medium))
+                                .foregroundColor(.primary)
+                                .rotationEffect(.degrees(showQuickActions ? 45 : 0))
+                                .scaleEffect(plusButtonScale)
                         }
+                        .buttonStyle(.glass)
+                        .frame(width: 44, height: 44)
+                        .clipShape(Circle())
+                        .scaleEffect(showQuickActions ? 0.95 : 1.0)
+                        .animation(.spring(response: 0.2, dampingFraction: 0.6), value: showQuickActions)
                         
-                        Image(systemName: "plus")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(.primary)
-                            .rotationEffect(.degrees(showQuickActions ? 45 : 0))
-                            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: showQuickActions)
-                    }
-                }
-                .scaleEffect(showQuickActions ? 0.9 : 1.0)
-                .animation(.spring(response: 0.2, dampingFraction: 0.6), value: showQuickActions)
-                
-                // Text Input Field
-                HStack {
-                    TextField(placeholder, text: $text, axis: .vertical)
-                        .textFieldStyle(PlainTextFieldStyle())
-                        .font(.system(size: 16, weight: .regular))
-                        .foregroundColor(.primary)
-                        .lineLimit(1...5)
-                        .onChange(of: text) { _, newValue in
-                            updateTextFieldHeight()
+                        // Text Input Field
+                        HStack {
+                            TextField(placeholder, text: $text, axis: .vertical)
+                                .textFieldStyle(PlainTextFieldStyle())
+                                .font(.system(size: 17, weight: .regular))
+                                .foregroundColor(.primary)
+                                .lineLimit(1...5)
+                                .onChange(of: text) { _, newValue in
+                                    updateTextFieldHeight()
+                                }
+                                .placeholder(when: text.isEmpty) {
+                                    Text(placeholder)
+                                        .foregroundColor(.secondary)
+                                        .font(.system(size: 17, weight: .regular))
+                                }
+                                .onTapGesture {
+                                    animatedTextFieldTap()
+                                }
+                            
+                            // Send Button with enhanced liquid effect
+                            if !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                                ZStack {
+                                    // Ripple effect
+                                    Circle()
+                                        .stroke(Color.accentColor.opacity(0.8), lineWidth: 2)
+                                        .scaleEffect(sendButtonRipple)
+                                        .opacity(1.0 - sendButtonRipple * 0.7)
+                                    
+                                    Button(action: animatedSendMessage) {
+                                        Image(systemName: "arrow.up.circle.fill")
+                                            .font(.system(size: 24, weight: .medium))
+                                            .foregroundColor(.accentColor)
+                                            .scaleEffect(sendButtonScale)
+                                    }
+                                    .buttonStyle(.glass)
+                                    .frame(width: 36, height: 36)
+                                    .clipShape(Circle())
+                                }
+                                .transition(.scale.combined(with: .opacity))
+                                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: text)
+                            }
                         }
-                    
-                    // Send Button (appears when text is not empty)
-                    if !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                        Button(action: sendMessage) {
-                            Image(systemName: "arrow.up.circle.fill")
-                                .font(.system(size: 24, weight: .medium))
-                                .foregroundColor(.blue)
-                        }
-                        .transition(.scale.combined(with: .opacity))
-                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: text)
-                    }
-                }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 10)
-                .background {
-                    if #available(iOS 26.0, *) {
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .fill(.clear)
-                            .glassEffect(
-                                isInteractive: true,
-                                shape: RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            )
-                    } else {
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .fill(.ultraThinMaterial)
-                    }
-                }
-                .frame(height: max(40, textFieldHeight))
-                
-                // Camera Button
-                Button(action: onCameraTap) {
-                    ZStack {
-                        if #available(iOS 26.0, *) {
-                            Circle()
-                                .fill(.clear)
-                                .glassEffect(
-                                    isInteractive: true,
-                                    shape: Circle()
-                                )
-                                .frame(width: 36, height: 36)
-                        } else {
-                            Circle()
-                                .fill(.ultraThinMaterial)
-                                .frame(width: 36, height: 36)
-                        }
-                        
-                        Image(systemName: "camera.fill")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(.primary)
-                    }
-                }
-                
-                // Microphone Button
-                Button(action: handleMicTap) {
-                    ZStack {
-                        if #available(iOS 26.0, *) {
-                            Circle()
-                                .fill(.clear)
-                                .glassEffect(
-                                    isInteractive: true,
-                                    shape: Circle()
-                                )
-                                .frame(width: 36, height: 36)
-                        } else {
-                            Circle()
-                                .fill(.ultraThinMaterial)
-                                .frame(width: 36, height: 36)
-                        }
-                        
-                        Image(systemName: isRecording ? "stop.fill" : "mic.fill")
-                            .font(.system(size: 16, weight: .medium))
-                            .foregroundColor(isRecording ? .red : .primary)
-                            .scaleEffect(recordingScale)
-                    }
-                }
-                .animation(.easeInOut(duration: 0.2), value: isRecording)
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background {
-                if #available(iOS 26.0, *) {
-                    Rectangle()
-                        .fill(.clear)
-                        .glassEffect(
-                            isInteractive: true,
-                            shape: Rectangle()
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .glassEffect()
+                        .clipShape(RoundedRectangle(cornerRadius: 22))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 22)
+                                .stroke(Color.black.opacity(0.3), lineWidth: 1.5)
                         )
-                } else {
-                    Rectangle()
-                        .fill(.ultraThinMaterial)
+                        .frame(height: max(44, textFieldHeight))
+                        .scaleEffect(textFieldScale)
+                        .animation(.spring(response: 0.4, dampingFraction: 0.6), value: textFieldScale)
+                        
+                        // Camera Button with enhanced liquid effect
+                        Button(action: animatedCameraTap) {
+                            Image(systemName: "camera.fill")
+                                .font(.system(size: 18, weight: .medium))
+                                .foregroundColor(.primary)
+                                .scaleEffect(cameraButtonScale)
+                        }
+                        .buttonStyle(.glass)
+                        .frame(width: 44, height: 44)
+                        .clipShape(Circle())
+                        
+                        // Microphone Button with enhanced liquid effect
+                        Button(action: animatedMicTap) {
+                            Image(systemName: isRecording ? "stop.fill" : "mic.fill")
+                                .font(.system(size: 18, weight: .medium))
+                                .foregroundColor(isRecording ? .red : .primary)
+                                .scaleEffect(micButtonScale * recordingScale)
+                        }
+                        .buttonStyle(.glass)
+                        .frame(width: 44, height: 44)
+                        .clipShape(Circle())
+                        .animation(.easeInOut(duration: 0.2), value: isRecording)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(Color.clear) // Ensure fully transparent background
                 }
+                // Removed .backgroundExtensionEffect() to prevent mirroring the input bar
+            } else {
+                // Fallback on earlier versions
             }
         }
+        .padding(.bottom, 0)
+        .ignoresSafeArea(.container, edges: .bottom)
         .animation(.spring(response: 0.5, dampingFraction: 0.8), value: showQuickActions)
+    }
+    
+    // MARK: - Enhanced Animation Methods
+    private func animatedToggleQuickActions() {
+        // Trigger liquid animation
+        withAnimation(.easeOut(duration: 0.1)) {
+            plusButtonScale = 0.85
+        }
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.6).delay(0.1)) {
+            plusButtonScale = 1.0
+        }
+        
+        // Original functionality
+        toggleQuickActions()
+    }
+    
+    private func animatedSendMessage() {
+        // Trigger liquid animation
+        withAnimation(.easeOut(duration: 0.1)) {
+            sendButtonScale = 0.8
+        }
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.6).delay(0.1)) {
+            sendButtonScale = 1.0
+        }
+        
+        // Ripple effect
+        withAnimation(.easeOut(duration: 0.6)) {
+            sendButtonRipple = 1.8
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            sendButtonRipple = 0.0
+        }
+        
+        // Original functionality
+        sendMessage()
+    }
+    
+    private func animatedCameraTap() {
+        // Trigger liquid animation
+        withAnimation(.easeOut(duration: 0.1)) {
+            cameraButtonScale = 0.85
+        }
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.6).delay(0.1)) {
+            cameraButtonScale = 1.0
+        }
+        
+        // Original functionality
+        onCameraTap()
+    }
+    
+    private func animatedMicTap() {
+        // Trigger liquid animation
+        withAnimation(.easeOut(duration: 0.1)) {
+            micButtonScale = 0.85
+        }
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.6).delay(0.1)) {
+            micButtonScale = 1.0
+        }
+        
+        // Original functionality
+        handleMicTap()
+    }
+    
+    private func animatedTextFieldTap() {
+        // Trigger liquid animation
+        withAnimation(.easeOut(duration: 0.1)) {
+            textFieldScale = 0.95
+        }
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.6).delay(0.1)) {
+            textFieldScale = 1.0
+        }
     }
     
     // MARK: - Private Methods
@@ -246,9 +299,9 @@ struct LiquidGlassInputBar: View {
     private func updateTextFieldHeight() {
         // Calculate height based on text content
         let lines = text.components(separatedBy: .newlines).count
-        let baseHeight: CGFloat = 40
-        let lineHeight: CGFloat = 20
-        textFieldHeight = min(baseHeight + CGFloat(max(0, lines - 1)) * lineHeight, 120)
+        let baseHeight: CGFloat = 44
+        let lineHeight: CGFloat = 22
+        textFieldHeight = min(baseHeight + CGFloat(max(0, lines - 1)) * lineHeight, 130)
     }
 }
 
@@ -258,33 +311,27 @@ struct QuickActionsMenu: View {
     @Binding var isVisible: Bool
     
     var body: some View {
-        VStack(spacing: 8) {
-            ForEach(actions) { action in
-                QuickActionButton(action: action) {
-                    action.action()
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                        isVisible = false
+        if #available(iOS 26.0, *) {
+            GlassEffectContainer {
+                VStack(spacing: 8) {
+                    ForEach(actions) { action in
+                        QuickActionButton(action: action) {
+                            action.action()
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                isVisible = false
+                            }
+                        }
                     }
                 }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 10)
+                .glassEffect()
             }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 8)
+        } else {
+            // Fallback on earlier versions
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
-        .background {
-            if #available(iOS 26.0, *) {
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(.clear)
-                    .glassEffect(
-                        isInteractive: true,
-                        shape: RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    )
-            } else {
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(.ultraThinMaterial)
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.bottom, 8)
     }
 }
 
@@ -293,35 +340,62 @@ struct QuickActionButton: View {
     let action: QuickAction
     let onTap: () -> Void
     
-    @State private var isPressed = false
-    
     var body: some View {
-        Button(action: onTap) {
-            HStack(spacing: 12) {
-                Image(systemName: action.icon)
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(action.color)
-                    .frame(width: 24, height: 24)
-                
-                Text(action.title)
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(.primary)
-                
-                Spacer()
+        if #available(iOS 26.0, *) {
+            Button(action: onTap) {
+                HStack(spacing: 12) {
+                    Image(systemName: action.icon)
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(action.color)
+                        .frame(width: 24, height: 24)
+                    
+                    Text(action.title)
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.primary)
+                    
+                    Spacer()
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(isPressed ? action.color.opacity(0.1) : Color.clear)
+            .buttonStyle(.glass)
+        } else {
+            // Fallback on earlier versions
+        };if #available(iOS 26.0, *) {
+            Button(action: onTap) {
+                HStack(spacing: 12) {
+                    Image(systemName: action.icon)
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(action.color)
+                        .frame(width: 24, height: 24)
+                    
+                    Text(action.title)
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.primary)
+                    
+                    Spacer()
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
             }
-            .scaleEffect(isPressed ? 0.95 : 1.0)
-            .animation(.easeInOut(duration: 0.1), value: isPressed)
+            .buttonStyle(.glass)
+        } else {
+            // Fallback on earlier versions
         }
-        .buttonStyle(PlainButtonStyle())
-        .onLongPressGesture(minimumDuration: 0, maximumDistance: .infinity, pressing: { pressing in
-            isPressed = pressing
-        }, perform: {})
+    }
+}
+
+// MARK: - Placeholder Modifier for TextField
+extension View {
+    func placeholder<Content: View>(
+        when shouldShow: Bool,
+        alignment: Alignment = .leading,
+        @ViewBuilder placeholder: () -> Content) -> some View {
+        
+        ZStack(alignment: alignment) {
+            placeholder().opacity(shouldShow ? 1 : 0)
+            self
+        }
     }
 }
 
@@ -330,9 +404,9 @@ struct QuickActionButton: View {
 struct LiquidGlassInputBar_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            // Background gradient
+            // Background gradient to test transparency
             LinearGradient(
-                colors: [Color.blue.opacity(0.3), Color.purple.opacity(0.3)],
+                colors: [Color.blue.opacity(0.4), Color.purple.opacity(0.4)],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )

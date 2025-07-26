@@ -51,30 +51,6 @@ struct CoreTrackApp: App {
     }
 }
 
-// MARK: - Content View
-@MainActor
-struct ContentView: View {
-    @EnvironmentObject var userManager: UserManager
-    @EnvironmentObject var weatherManager: WeatherManager
-    
-    var body: some View {
-        GeometryReader { geometry in
-            MainView()
-                .frame(width: geometry.size.width, height: geometry.size.height)
-        }
-        .preferredColorScheme(.dark)
-        .ignoresSafeArea()
-        .onAppear {
-            // Generate a personalised greeting when the app opens
-            if !weatherManager.hasLoadedGreetingThisSession {
-                let greeting = weatherManager.generateGreeting(userName: "Luke") // You can make this dynamic
-                print("Weather-based greeting: \(greeting)")
-                weatherManager.hasLoadedGreetingThisSession = true
-            }
-        }
-    }
-}
-
 #Preview {
     ContentView()
         .environmentObject(FoodDataManager())
@@ -85,5 +61,4 @@ struct ContentView: View {
         .environmentObject(NotificationManager.shared)
         .environmentObject(WeatherManager.shared)
         .environmentObject(ServiceManager.shared)
-} 
-
+}

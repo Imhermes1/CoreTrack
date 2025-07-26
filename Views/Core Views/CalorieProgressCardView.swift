@@ -7,6 +7,7 @@ struct CalorieProgressCardView: View {
     @EnvironmentObject var notificationManager: NotificationManager
 
     @State private var isExpanded = false
+    @State private var selectedSummaryTab: String = "Summary"
 
     var body: some View {
         let totals = dataManager.getTodaysTotals()
@@ -22,6 +23,35 @@ struct CalorieProgressCardView: View {
         }()
 
         VStack(spacing: 0) {
+            // Summary navigation tabs (internal to this card)
+            HStack {
+                Button(action: { selectedSummaryTab = "Summary" }) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "flame.fill")
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundColor(selectedSummaryTab == "Summary" ? .orange : .white.opacity(0.6))
+                        Text("Summary")
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundColor(selectedSummaryTab == "Summary" ? .white : .white.opacity(0.6))
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(
+                        Capsule()
+                            .fill(selectedSummaryTab == "Summary" ? .orange.opacity(0.2) : Color.clear)
+                            .overlay(
+                                Capsule()
+                                    .stroke(selectedSummaryTab == "Summary" ? .orange.opacity(0.3) : Color.clear, lineWidth: 1)
+                            )
+                    )
+                }
+                .adaptiveGlassButton()
+                
+                Spacer()
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 8)
+
             // Header summary
             Button(action: { withAnimation(.spring()) { isExpanded.toggle() } }) {
                 HStack {
@@ -115,3 +145,4 @@ struct CalorieProgressCardView_Previews: PreviewProvider {
     }
 }
 #endif
+

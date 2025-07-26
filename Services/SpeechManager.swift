@@ -81,7 +81,7 @@ class SpeechManager: NSObject, ObservableObject {
     private override init() {
         super.init()
         print("📱 SpeechManager: Private init called")
-        // Permissions will be requested explicitly from MainView.onAppear
+        // Permissions will be requested explicitly from ContentView.onAppear
     }
     
     // MARK: - Permissions
@@ -404,4 +404,3 @@ class SpeechManager: NSObject, ObservableObject {
         startRecording()
     }
 }
-

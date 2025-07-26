@@ -1,5 +1,5 @@
 //
-//  ServiceManager.swift  
+//  ServiceManager.swift
 //  CoreTrack
 //
 //  Created by Luke Fornieri on 11/6/2025.
@@ -62,7 +62,7 @@ final class ServiceManager: ObservableObject {
     
     deinit {
         // Clear services synchronously during deinit to avoid capturing self in a task
-        if let speechManager = _speechManager {
+        if _speechManager != nil {
             // Note: We can't use async cleanup in deinit, so we'll just nil out the reference
             // The SpeechManager's own deinit will handle its cleanup
             _speechManager = nil
